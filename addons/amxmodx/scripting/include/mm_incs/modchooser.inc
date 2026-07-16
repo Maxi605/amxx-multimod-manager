@@ -97,7 +97,7 @@ public OnTask_VoteNextMod()
 		menu_additem(g_Menu_ModChooser, fmt("\w%s%s", aMods[ModName], (g_iModVoteNum == (iMaxMods-1)) ? "^n" : ""), fmt("%d", g_iModVoteNum));
 	}
 
-	if(IsAvailableExtendMap())
+	if(IsAvailableExtendMap() && !(iRecentMods && Recent_IsRecentMod(g_szCurrentMod)))
 	{
 		if(g_bIsRockTheVote)
 			menu_additem(g_Menu_ModChooser, fmt("\w%L^n", LANG_PLAYER, "MM_M_EXTEND_CURRENT_MODE_RTV", g_szCurrentMod), fmt("%d", OPTION_EXTEND_MOD));
