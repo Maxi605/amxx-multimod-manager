@@ -288,13 +288,32 @@ public OnTaskCheckVoteMod()
 			}
 			else
 			{
-				ExtendTimeleft(g_bCvar_amx_extendmap_step);
-				client_print_color(0, print_team_blue, "%s^1 %L", g_GlobalConfigs[ChatPrefix], LANG_PLAYER, "MM_MOD_CHO_FIN_EXT", g_bCvar_amx_extendmap_step, iResult, g_iVoteModCount, UTIL_GetPercent(iResult, g_iVoteModCount));
+				ArrayGetArray(g_GlobalConfigs[Mods], g_iCurrentMod, aData);
 
-				ModChooser_ResetAllData();
-				Nominations_ResetAllData();
+				if(aData[ExtendCurrentModeChangesMap])
+				{
+					g_iNextSelectMod = g_iCurrentMod;
+					MultiMod_SetNextMod(g_iNextSelectMod);
+
+					client_print_color(0, print_team_blue, "%s^1 El modo actual continuara. Comenzando votación para cambio de mapa.", g_GlobalConfigs[ChatPrefix]);
+
+					ModChooser_ResetAllData();
+					Nominations_ResetAllData();
+
+					g_bSelectedNextMod = true;
+
+					MapChooser_InitNextVoteMap(40);
+				}
+				else
+				{
+					ExtendTimeleft(g_bCvar_amx_extendmap_step);
+
+					client_print_color(0, print_team_blue, "%s^1 %L", g_GlobalConfigs[ChatPrefix], LANG_PLAYER, "MM_MOD_CHO_FIN_EXT", g_bCvar_amx_extendmap_step, iResult, g_iVoteModCount, UTIL_GetPercent(iResult, g_iVoteModCount));
+
+					ModChooser_ResetAllData();
+					Nominations_ResetAllData();
+				}
 			}
-			
 			return;
 		}
 
