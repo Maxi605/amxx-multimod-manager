@@ -836,6 +836,12 @@ MultiMod_SetNextMod(const iNextMod)
 	new aDataNextMod[ArrayMods_e];
 	ArrayGetArray(g_GlobalConfigs[Mods], iNextMod, aDataNextMod);
 
+	// Reiniciamos la CVAR si el siguiente modo no es el mismo.
+	if (!equali(aDataNextMod[ModName], g_szCurrentMod))
+	{
+		set_pcvar_string(g_pCvar_mm_extended_mod, "");
+	}
+
 	new szFileName[PLATFORM_MAX_PATH];
 	new iLen = get_configsdir(szFileName, charsmax(szFileName));
 	formatex(szFileName[iLen], charsmax(szFileName) - iLen, "/%s", MM_PLUGINS_FILENAME);
